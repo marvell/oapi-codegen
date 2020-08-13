@@ -201,7 +201,9 @@ func Generate(swagger *openapi3.Swagger, packageName string, opts Options) (stri
 	// Imports needed for the generated code to compile
 	var imports []string
 	for _, importGo := range importMapping {
-		imports = append(imports, importGo.String())
+		if importGo.packageName != "." {
+			imports = append(imports, importGo.String())
+		}
 	}
 
 	var buf bytes.Buffer

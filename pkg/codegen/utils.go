@@ -214,15 +214,22 @@ func RefPathToGoType(refPath string) (string, error) {
 		return "", fmt.Errorf("unsupported reference: %s", refPath)
 	}
 	remoteComponent, flatComponent := pathParts[0], pathParts[1]
-	if goImport, ok := importMapping[remoteComponent]; !ok {
+
+	goImport, ok := importMapping[remoteComponent]
+	if !ok {
 		return "", fmt.Errorf("unrecognized external reference '%s'; please provide the known import for this reference using option --import-mapping", remoteComponent)
-	} else {
-		goType, err := RefPathToGoType("#" + flatComponent)
-		if err != nil {
-			return "", err
-		}
-		return fmt.Sprintf("%s.%s", goImport.alias, goType), nil
 	}
+
+	goType, err := RefPathToGoType("#" + flatComponent)
+	if err != nil {
+		return "", err
+	}
+
+	if goImport.packageName == "." {
+		return goType, nil
+	}
+
+	return fmt.Sprintf("%s.%s", goImport.alias, goType), nil
 }
 
 // This function converts a swagger style path URI with parameters to a
