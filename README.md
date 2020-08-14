@@ -29,7 +29,7 @@ write a lot of boilerplate code to perform all the marshalling and unmarshalling
 into objects which match the OpenAPI 3.0 definition. The code generator in this
 directory does a lot of that for you. You would run it like so:
 
-    go get github.com/deepmap/oapi-codegen/cmd/oapi-codegen
+    go get github.com/marvell/oapi-codegen/cmd/oapi-codegen
     oapi-codegen petstore-expanded.yaml  > petstore.gen.go
 
 Let's go through that `petstore.gen.go` file to show you everything which was
@@ -370,7 +370,7 @@ which help you to use the various OpenAPI 3 Authentication mechanism.
 
 ```
     import (
-        "github.com/deepmap/oapi-codegen/pkg/securityprovider"
+        "github.com/marvell/oapi-codegen/pkg/securityprovider"
     )
 
     func CreateSampleProviders() error {
@@ -473,14 +473,14 @@ An external reference looks like this:
     
 We assume that you have already generated the boilerplate code for `./some_spec.yaml`
 using `oapi-codegen`, and you have a package which contains the generated code,
-let's call it `github.com/deepmap/some-package`. You need to tell `oapi-codegen` that
+let's call it `github.com/marvell/some-package`. You need to tell `oapi-codegen` that
 `some_spec.yaml` corresponds to this package, and you would do it by specifying
 this command line argument:
 
-    -import-mapping=./some_spec.yaml:github.com/deepmap/some-package
+    -import-mapping=./some_spec.yaml:github.com/marvell/some-package
     
 This tells us that in order to resolve references generated from `some_spec.yaml` we
-need to import `github.com/deepmap/some-package`. You may specify multiple mappings
+need to import `github.com/marvell/some-package`. You may specify multiple mappings
 by comma separating them in the form `key1:value1,key2:value2`.
     
 ## What's missing or incomplete
